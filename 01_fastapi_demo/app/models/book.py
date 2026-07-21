@@ -18,5 +18,5 @@ class Book(Base):
     category_id = Column(Integer, ForeignKey("categories.id", ondelete="RESTRICT"), nullable=False)
     
     #Quan he n - 1
-    books = relationship("Author", back_populates="books")
-    books = relationship("Category", back_populates="categories")
+    author = relationship("Author", back_populates="books")
+    category = relationship("Category", back_populates="books")
