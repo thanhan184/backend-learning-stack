@@ -7,9 +7,9 @@ class Book(Base):
     __tablename__ = "books"
 
     id = Column(Integer, primary_key = True, index = True)
-    title = Column(String(255), nullable=True, index=True)
-    description = Column(Text, nullable=True)
-    publish_year = Column(Integer, nullable=True)
+    title = Column(String(255), nullable=False, index=True)
+    description = Column(Text, nullable=False)
+    publish_year = Column(Integer, nullable=False)
     cover_image = Column(String(255), nullable=True)    #save path, stactic/covers/abc.jpg
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)

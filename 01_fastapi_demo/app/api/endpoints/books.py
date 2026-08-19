@@ -20,13 +20,15 @@ def list_books(
     """
         Get list books, iclude filter by author_id, category_id, year, keyword
     """
-    if author_id:
+    query = db.query(models.Book)
+
+    if author_id is not None:
         query = query.filter(models.Book.author_id == author_id)
-    if category_id:
+    if category_id is not None:
         query = query.filter(models.Book.category_id == category_id)    
-    if year:
+    if year is not None:
         query = query.filter(models.Book.publish_year == year)
-    if keyword:
+    if keyword is not None:
         query = query.filter(models.Book.title.ilike(f"%{keyword}%"))
     
     books = db.query(models.Book).offset(skip).limit(limit).all()

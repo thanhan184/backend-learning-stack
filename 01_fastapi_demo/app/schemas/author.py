@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 class AuthorBase(BaseModel):
     name: str
@@ -16,8 +16,7 @@ class AuthorUpdate(BaseModel):
 class AuthorInDB(AuthorBase):
     id: int
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 class Author(AuthorInDB):
     """Schema return for clients"""

@@ -76,6 +76,7 @@ def update_author(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail = "Another author name already exists",
         )
+        author.name = author_up.name
     
     if author_up.bio is not None:
         author.bio = author_up.bio
@@ -88,7 +89,7 @@ def update_author(
     return author
 
 @router.delete("/{author_id}", status_code=status.HTTP_204_NO_CONTENT)
-def update_author(
+def delete_author(
         author_id: int, 
         db: Session = Depends(get_db)
     ):

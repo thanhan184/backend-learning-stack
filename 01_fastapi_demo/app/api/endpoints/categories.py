@@ -18,8 +18,8 @@ def list_categories(
     categories = db.query(models.Category).offset(skip).limit(limit).all()
     return categories
 
-@router.get("/{cate_id}", response_model=Category)
-def get_categories(
+@router.get("/{category_id}", response_model=Category)
+def get_category(
         categories_id: int, 
         db: Session = Depends(get_db)
     ):
@@ -53,7 +53,7 @@ def create_category(
 
     return category
 
-@router.put("/{cate_id}", response_model=Category)
+@router.put("/{category_id}", response_model=Category)
 def update_category(
         category_id: int, 
         category_up: CategoryUpdate,
@@ -86,8 +86,8 @@ def update_category(
 
     return category
 
-@router.delete("/{cate_id}", status_code=status.HTTP_204_NO_CONTENT)
-def update_category(
+@router.delete("/{category_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_category(
         category_id: int, 
         db: Session = Depends(get_db)
     ):
