@@ -31,7 +31,7 @@ def list_books(
     if keyword is not None:
         query = query.filter(models.Book.title.ilike(f"%{keyword}%"))
     
-    books = db.query(models.Book).offset(skip).limit(limit).all()
+    books = query.offset(skip).limit(limit).all()
     return books
 
 @router.get("/{book_id}", response_model=Book)

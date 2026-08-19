@@ -20,11 +20,11 @@ def list_categories(
 
 @router.get("/{category_id}", response_model=Category)
 def get_category(
-        categories_id: int, 
+        category_id: int, 
         db: Session = Depends(get_db)
     ):
     """Get category by id"""
-    category = db.query(models.Category).filter(models.Category.id == categories_id).first()
+    category = db.query(models.Category).filter(models.Category.id == category_id).first()
     if not category:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -75,6 +75,8 @@ def update_category(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail = "Another category name already exists",
         )
+
+        category.name = category_up.name
     
     if category_up.description is not None:
         category.description = category_up.description
