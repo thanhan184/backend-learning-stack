@@ -62,6 +62,22 @@ def create_book(
             detail="Book with this title already exists",
         )
     
+    author = db.query(models.Author).filter(models.Author.id == book_in.author_id).first()
+
+    if not author:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Author not found",
+        )
+
+    category = db.query(models.Category).filter(models.Category.id == book_in.category_id).first()
+
+    if not category:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Category not found",
+        )
+
     book = models.Book(
         title = book_in.title,
         description = book_in.description,
@@ -92,6 +108,32 @@ def update_book(
     
     update_data = book_in.model_dump(exclude_unset=True)
     
+    if "author_id" in update_data:
+        author = (
+            db.query(models.Author)
+            .filter(models.Author.id == update_data["author_id"])
+            .first()
+        )
+
+        if not author:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Author not found"
+            )
+
+    if "category_id" in update_data:
+        category = (
+            db.query(models.Category)
+            .filter(models.Category.id == update_data["category_id"])
+            .first()
+        )
+
+        if not category:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Category not found"
+            )
+
     for field, value in update_data.items():
         setattr(book, field, value)
         
